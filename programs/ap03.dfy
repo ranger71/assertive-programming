@@ -111,7 +111,7 @@ lemma CorrectInit(n: int)
 
 lemma CorrectUpdateLo(n: int, lo: int, mid: int, hi: int, V0: int)
 	requires Inv(n, lo, hi)
-	requires hi != lo+1;
+	requires hi != lo+1
 	requires V0 == hi-lo
 	requires	mid == (hi+lo)/2
 	requires mid*mid <= n
@@ -121,7 +121,7 @@ lemma CorrectUpdateLo(n: int, lo: int, mid: int, hi: int, V0: int)
 
 lemma CorrectUpdateHi(n: int, lo: int, mid: int, hi: int, V0: int)
 	requires Inv(n, lo, hi)
-	requires hi != lo+1;
+	requires hi != lo+1
 	requires V0 == hi-lo
 	requires	mid == (hi+lo)/2
 	requires mid*mid > n
