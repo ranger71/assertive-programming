@@ -19,6 +19,7 @@ method Sqrt(n: int) returns (res: int)
     assert res*res <= n;
     while !(n < (res+1)*(res+1))
         invariant res*res <= n
+        decreases n - res*res
     {
         assert res*res <= n;
         assert !(n < (res+1)*(res+1));
@@ -28,4 +29,37 @@ method Sqrt(n: int) returns (res: int)
         assert res*res <= n;
     }
     assert res*res <= n < (res+1)*(res+1);
+}
+
+method Sqrt'(n: int) returns (res: int)
+    requires n >= 0
+    ensures res*res <= n < (res+1)*(res+1)
+{
+    res := 0;
+    while !(n < (res+1)*(res+1))
+        invariant res*res <= n
+        decreases n - res*res
+    {
+        ghost var V0 := n - res*res;
+        assert res*res <= n;
+        assert !(n < (res+1)*(res+1));
+        assert V0 == n - res*res;
+        // ==>?
+        assert 0 <= n - (res+1)*(res+1) < V0;
+        res := res+1;
+        assert 0 <= n - res*res < V0;
+    }
+}
+
+method Sqrt''(n: int) returns (res: int)
+    requires n >= 0
+    ensures res*res <= n < (res+1)*(res+1)
+{
+    res := 0;
+    while !(n < (res+1)*(res+1))
+        invariant res*res <= n
+        decreases n - res*res
+    {
+        res := res+1;
+    }
 }
