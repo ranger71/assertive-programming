@@ -63,3 +63,52 @@ method Sqrt''(n: int) returns (res: int)
         res := res+1;
     }
 }
+
+method Sqrt_Down_Loop(n: int) returns (res: int)
+    requires n >= 0
+    ensures res*res <= n < (res+1)*(res+1)
+{
+    assert n >= 0;
+    // ==>
+    assert n < (n+1)*(n+1);
+    assert 0 <= n;
+    res := n;
+    assert n < (res+1)*(res+1);
+    assert 0 <= res;
+    while n < res*res
+        invariant n < (res+1)*(res+1)
+        invariant 0 <= res
+        decreases res 
+    {
+        assert n < (res+1)*(res+1);
+        assert 0 <= res;
+        assert n < res*res;
+        // ==>?
+        assert n < (res-1+1)*(res-1+1);
+        assert 0 <= res-1;
+        assert 0 <= res-1 < res;
+        ghost var V0 := res;
+        assert n < (res-1+1)*(res-1+1);
+        assert 0 <= res-1;
+        assert 0 <= res-1 < V0;
+        res := res-1;
+        assert n < (res+1)*(res+1);
+        assert 0 <= res;
+        assert 0 <= res < V0;
+    }
+    assert res*res <= n < (res+1)*(res+1);
+}
+
+method Sqrt_Down_Loop'(n: int) returns (res: int)
+    requires n >= 0
+    ensures res*res <= n < (res+1)*(res+1)
+{
+    res := n;
+    while n < res*res
+        invariant n < (res+1)*(res+1)
+        invariant 0 <= res
+        decreases res 
+     {
+         res := res-1;
+     }
+}
