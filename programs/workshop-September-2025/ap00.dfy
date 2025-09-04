@@ -15,10 +15,10 @@ method Main() {
 
     x, z := Swap(x, z);
     assert x == 5 && y == 8 && z == -2;
-    print "After swapping x and z:   x is ", x, " y is ", y, " and z is ", z ,"\n";
+    print "After swapping x and z:  x is ", x, " y is ", y, " and z is ", z ,"\n";
 /*
     x, y, z := Sort3(x, y, z);
-    //assert x == -2 && y == 5 && z == 8;
+    assert x == -2 && y == 5 && z == 8;
     print "After sorting x, y, z:    x is ", x, " y is ", y, " and z is ", z ,"\n";*/
 }
 
@@ -37,7 +37,13 @@ method Sort2(a0: int, b0: int) returns (a: int, b: int)
     ensures a <= b
 {
     if a0 <= b0 {
+        assert a0 <= b0;
+        // ==>?
+        assert (a0 == a0 && b0 == b0) || (a0 == b0 && b0 == a0);
+        assert a0 <= b0;
         a := a0;
+        assert (a == a0 && b0 == b0) || (a == b0 && b0 == a0);
+        assert a <= b0;
         b := b0;
         assert (a == a0 && b == b0) || (a == b0 && b == a0);
         assert a <= b;
@@ -58,7 +64,22 @@ method Sort2(a0: int, b0: int) returns (a: int, b: int)
     assert a <= b;
 }
 
+method Sort2'(a0: int, b0: int) returns (a: int, b: int)
+    ensures (a == a0 && b == b0) || (a == b0 && b == a0)
+    ensures a <= b
+{
+    if a0 <= b0 {
+        a := a0;
+        b := b0;
+    }
+    else {
+        a := b0;
+        b := a0;
+    }
+}
+
 /*
 method Sort3(a0: int, b0: int, c0: int) returns (a: int, b: int, c: int)
     ensures a <= b <= c
+    // Exercise: strengthen the postcondition (as in Sort2), implement and prove
 */
