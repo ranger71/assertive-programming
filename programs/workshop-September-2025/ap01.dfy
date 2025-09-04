@@ -64,6 +64,35 @@ method Sqrt''(n: int) returns (res: int)
     }
 }
 
+method Sqrt_from_class_with_a_weaker_invariant(n: int) returns (res: int)
+    requires n >= 0
+    ensures res*res <= n < (res+1)*(res+1)
+{
+    res := 0;
+    while res*res <= n
+        // this invariant is weaker than the one we had in class, and it is correct even on entry to the loop
+        invariant res == 0 || (res-1)*(res-1) <= n
+        decreases n - res
+    {
+        res := res+1;
+    }
+    res := res-1;
+}
+
+method Sqrt_from_class_with_a_different_initial_value(n: int) returns (res: int)
+    requires n >= 0
+    ensures res*res <= n < (res+1)*(res+1)
+{
+    res := 1; // instead of the 0 in class which did not establish the invariant in the case of n == 0 
+    while res*res <= n
+        invariant (res-1)*(res-1) <= n
+        decreases n - res
+    {
+        res := res+1;
+    }
+    res := res-1;
+}
+
 method Sqrt_Down_Loop(n: int) returns (res: int)
     requires n >= 0
     ensures res*res <= n < (res+1)*(res+1)
