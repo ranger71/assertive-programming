@@ -1,5 +1,12 @@
 # Object file
 *.o
+*.csproj*
+*.cs
+*.dll
+*.pdb
+obj*
 
 # Ada Library Information
 *.ali
+
+*.json
