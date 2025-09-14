@@ -17,9 +17,12 @@ method Main() {
     assert x == 5 && y == 8 && z == -2;
     print "After swapping x and z:  x is ", x, " y is ", y, " and z is ", z ,"\n";
 
+    ghost var x0, y0, z0 := x, y, z;
     x, y, z := Sort3(x, y, z);
-    // TODO: complete the proof!
-//    assert x == -2 && y == 5 && z == 8;
+    assert x == -2 && y == 5 && z == 8 by {
+        assert multiset({x0, y0, z0}) == multiset{5, 8, -2} ==
+            multiset{-2, 5, 8} == multiset({x, y, z});
+    }
     print "After sorting x, y, z:    x is ", x, " y is ", y, " and z is ", z ,"\n";
 }
 
