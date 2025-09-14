@@ -8,7 +8,9 @@ method Main() {
 }
 
 //function ShouldUpdateLowerBound(n: int, a: int, m: int, b: int): bool
-predicate ShouldUpdateLowerBound(n: int, a: int, m: int, b: int)
+predicate ShouldUpdateLowerBound(n: int, a: int, m: int, b: int) {
+	m*m <= n
+}
 
 method Sqrt(n: int) returns (res: int)
     requires n >= 0
@@ -21,15 +23,19 @@ method Sqrt(n: int) returns (res: int)
 	assert a*a <= n < b*b;
 	while b != a+1
 		invariant a*a <= n < b*b
+		decreases b - a
 	{
 		var m := (a+b)/2; // Note: no overflow concerns here
 		if ShouldUpdateLowerBound(n, a, m, b)
 		{
+			// ==>?
 			assert m*m <= n < b*b;
 			a := m;
 			assert a*a <= n < b*b;
 		}
 		else {
+			// ==>?
+			assert a*a <= n < m*m;
 			b := m;
 			assert a*a <= n < b*b;
 		}
