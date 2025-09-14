@@ -20,6 +20,8 @@ method Main() {
     ghost var x0, y0, z0 := x, y, z;
     x, y, z := Sort3(x, y, z);
     assert x == -2 && y == 5 && z == 8 by {
+        // Exercise: make the proof more explicit, considering
+        // also the other postcondition that x <= y <= z
         assert multiset({x0, y0, z0}) == multiset{5, 8, -2} ==
             multiset{-2, 5, 8} == multiset({x, y, z});
     }
