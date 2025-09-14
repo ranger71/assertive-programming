@@ -16,10 +16,11 @@ method Main() {
     x, z := Swap(x, z);
     assert x == 5 && y == 8 && z == -2;
     print "After swapping x and z:  x is ", x, " y is ", y, " and z is ", z ,"\n";
-/*
+
     x, y, z := Sort3(x, y, z);
-    assert x == -2 && y == 5 && z == 8;
-    print "After sorting x, y, z:    x is ", x, " y is ", y, " and z is ", z ,"\n";*/
+    // TODO: complete the proof!
+//    assert x == -2 && y == 5 && z == 8;
+    print "After sorting x, y, z:    x is ", x, " y is ", y, " and z is ", z ,"\n";
 }
 
 method Swap(a0: int, b0: int) returns (a: int, b: int)
@@ -78,8 +79,8 @@ method Sort2'(a0: int, b0: int) returns (a: int, b: int)
     }
 }
 
-/*
+
 method Sort3(a0: int, b0: int, c0: int) returns (a: int, b: int, c: int)
     ensures a <= b <= c
+    ensures multiset({a0, b0, c0}) == multiset({a, b, c})
     // Exercise: strengthen the postcondition (as in Sort2), implement and prove
-*/
